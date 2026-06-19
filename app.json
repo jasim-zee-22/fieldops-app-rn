@@ -1,0 +1,50 @@
+{
+  "expo": {
+    "name": "FieldOps Mobile",
+    "slug": "fieldops-mobile",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "scheme": "fieldops",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "backgroundColor": "#ffffff",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.fieldops.mobile",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "FieldOps uses your location to verify on-site GPS check-in for assigned jobs.",
+        "NSCameraUsageDescription": "FieldOps uses the camera to capture before/after job photos.",
+        "NSPhotoLibraryUsageDescription": "FieldOps lets you attach photos from your library to a job."
+      }
+    },
+    "android": {
+      "package": "com.fieldops.mobile",
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "CAMERA",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE"
+      ]
+    },
+    "plugins": [
+      "expo-router",
+      "expo-secure-store",
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "FieldOps uses your location to verify on-site GPS check-in for assigned jobs."
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "FieldOps lets you attach photos from your library to a job.",
+          "cameraPermission": "FieldOps uses the camera to capture before/after job photos."
+        }
+      ],
+      "expo-camera",
+      "expo-asset"
+    ]
+  }
+}
