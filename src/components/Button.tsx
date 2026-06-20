@@ -3,12 +3,14 @@ import {
   Pressable,
   StyleSheet,
   Text,
+  View,
   type StyleProp,
   type ViewStyle,
 } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { colors, radius, spacing } from '@/theme';
 
-type Variant = 'primary' | 'secondary' | 'danger' | 'ghost';
+type Variant = 'primary' | 'secondary' | 'danger' | 'ghost' | 'success' | 'dark';
 
 interface Props {
   label: string;
@@ -17,6 +19,8 @@ interface Props {
   loading?: boolean;
   disabled?: boolean;
   style?: StyleProp<ViewStyle>;
+  icon?: keyof typeof Ionicons.glyphMap;
+  fullRound?: boolean;
 }
 
 const bg: Record<Variant, string> = {
@@ -24,24 +28,39 @@ const bg: Record<Variant, string> = {
   secondary: colors.primaryLight,
   danger: colors.danger,
   ghost: 'transparent',
+  success: colors.green,
+  dark: '#0F1221',
 };
 
 const fg: Record<Variant, string> = {
   primary: colors.white,
-  secondary: colors.primaryDark,
+  secondary: colors.primary,
   danger: colors.white,
   ghost: colors.textMuted,
+  success: colors.white,
+  dark: colors.white,
 };
 
-export function Button({ label, onPress, variant = 'primary', loading, disabled, style }: Props) {
+export function Button({
+  label,
+  onPress,
+  variant = 'primary',
+  loading,
+  disabled,
+  style,
+  icon,
+  fullRound = false,
+}: Props) {
   const isDisabled = disabled || loading;
+  const borderR = fullRound ? radius.full : radius.md;
+
   return (
     <Pressable
       onPress={onPress}
       disabled={isDisabled}
       style={({ pressed }) => [
         styles.base,
-        { backgroundColor: bg[variant] },
+        { backgroundColor: bg[variant], borderRadius: borderR },
         variant === 'ghost' && styles.ghost,
         (pressed || isDisabled) && styles.dim,
         style,
@@ -50,7 +69,12 @@ export function Button({ label, onPress, variant = 'primary', loading, disabled,
       {loading ? (
         <ActivityIndicator color={fg[variant]} />
       ) : (
-        <Text style={[styles.label, { color: fg[variant] }]}>{label}</Text>
+        <View style={styles.inner}>
+          {icon && (
+            <Ionicons name={icon} size={18} color={fg[variant]} style={styles.icon} />
+          )}
+          <Text style={[styles.label, { color: fg[variant] }]}>{label}</Text>
+        </View>
       )}
     </Pressable>
   );
@@ -59,10 +83,17 @@ export function Button({ label, onPress, variant = 'primary', loading, disabled,
 const styles = StyleSheet.create({
   base: {
     minHeight: 52,
-    borderRadius: radius.md,
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: spacing.lg,
+  },
+  inner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.xs,
+  },
+  icon: {
+    marginRight: 2,
   },
   ghost: {
     borderWidth: 1,
@@ -74,5 +105,6 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 16,
     fontWeight: '600',
+    letterSpacing: 0.1,
   },
 });

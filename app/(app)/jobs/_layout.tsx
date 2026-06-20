@@ -10,8 +10,8 @@ export default function JobsStackLayout() {
         headerTitleStyle: { color: colors.text },
       }}
     >
-      <Stack.Screen name="index" options={{ title: 'My Jobs' }} />
-      <Stack.Screen name="[id]" options={{ title: 'Job Detail' }} />
+      <Stack.Screen name="index" options={{ headerShown: false }} />
+      <Stack.Screen name="[id]" options={{ headerShown: false }} />
       <Stack.Screen name="checkin" options={{ title: 'GPS Check-In', presentation: 'modal' }} />
       <Stack.Screen name="photos" options={{ title: 'Photos', presentation: 'modal' }} />
       <Stack.Screen name="notes" options={{ title: 'Add Note', presentation: 'modal' }} />
