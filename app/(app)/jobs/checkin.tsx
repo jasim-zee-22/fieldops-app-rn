@@ -45,15 +45,19 @@ export default function CheckInScreen() {
     setSubmitting(true);
     setSubmitError('');
     try {
-      await logGps(id, {
-        latitude: coords.latitude,
-        longitude: coords.longitude,
-        accuracy: coords.accuracy,
-        altitude: coords.altitude,
-        speed: coords.speed,
-        log_type: 'check_in',
-        logged_at: new Date().toISOString(),
-      });
+      
+     await logGps(id, {
+      latitude: coords.latitude,
+      longitude: coords.longitude,
+      accuracy: coords.accuracy,
+      altitude: coords.altitude,
+      speed:
+        coords.speed != null && coords.speed >= 0
+          ? coords.speed
+          : null,
+      log_type: 'check_in',
+      logged_at: new Date().toISOString(),
+    });
       void queryClient.invalidateQueries({ queryKey: ['job', id] });
       router.back();
     } catch (e) {

@@ -184,13 +184,14 @@ export default function JobDetailScreen() {
         <SafeAreaView edges={['top']}>
           {/* Nav row */}
           <View style={styles.heroNav}>
-            <Pressable style={styles.heroNavBtn} onPress={() => router.replace('/(app)/jobs')}>
+            <Pressable
+              style={styles.heroNavBtn}
+              onPress={() => router.replace('/(app)/jobs')}
+            >
               <Ionicons name="chevron-back" size={22} color={colors.white} />
             </Pressable>
+
             <Text style={styles.heroNavTitle}>Job Detail</Text>
-            <Pressable style={styles.heroNavBtn}>
-              <Ionicons name="ellipsis-horizontal" size={20} color={colors.white} />
-            </Pressable>
           </View>
 
           {/* Job info */}
@@ -347,7 +348,7 @@ export default function JobDetailScreen() {
             {job.requires_signature && (
               <QuickAction icon="create-outline" label="Signature" onPress={() => goto('signature')} />
             )}
-            <QuickAction icon="cube-outline" label="Parts" onPress={() => { }} />
+          
           </View>
         </View>
 
@@ -428,26 +429,33 @@ const styles = StyleSheet.create({
     paddingBottom: spacing.xl,
   },
   heroNav: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: spacing.lg,
-    paddingTop: spacing.sm,
-    paddingBottom: spacing.md,
-  },
-  heroNavBtn: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    backgroundColor: 'rgba(255,255,255,0.15)',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  heroNavTitle: {
-    color: colors.white,
-    fontSize: 17,
-    fontWeight: '700',
-  },
+  flexDirection: 'row',
+  alignItems: 'center',
+  paddingHorizontal: spacing.lg,
+  paddingTop: spacing.sm,
+  paddingBottom: spacing.md,
+  position: 'relative',
+},
+
+heroNavBtn: {
+  width: 36,
+  height: 36,
+  borderRadius: 18,
+  backgroundColor: 'rgba(255,255,255,0.15)',
+  alignItems: 'center',
+  justifyContent: 'center',
+  zIndex: 1,
+},
+
+heroNavTitle: {
+  position: 'absolute',
+  left: 0,
+  right: 0,
+  textAlign: 'center',
+  color: colors.white,
+  fontSize: 17,
+  fontWeight: '700',
+},
   heroBody: {
     paddingHorizontal: spacing.xl,
     gap: spacing.sm,

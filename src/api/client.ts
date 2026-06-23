@@ -43,9 +43,27 @@ api.interceptors.response.use(
 );
 
 /** Pull a human-friendly message out of an axios error. */
-export function apiErrorMessage(error: unknown, fallback = 'Something went wrong.'): string {
+export function apiErrorMessage(
+  error: unknown,
+  fallback = 'Something went wrong.'
+): string {
   if (axios.isAxiosError(error)) {
-    return (error.response?.data as { message?: string })?.message ?? error.message ?? fallback;
+    // Request timed out
+    if (error.code === 'ECONNABORTED') {
+      return 'The server is taking too long to respond. Please try again.';
+    }
+
+    // Backend unavailable / network issue
+    if (!error.response) {
+      return 'Unable to connect to the server. Please check your connection and try again.';
+    }
+
+    // API-provided message
+    return (
+      (error.response.data as { message?: string })?.message ??
+      fallback
+    );
   }
+
   return fallback;
 }

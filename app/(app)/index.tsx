@@ -52,7 +52,7 @@ function HeroCard({ job, onNavigate }: { job: Job; onNavigate: () => void }) {
             <Text style={styles.heroTimeBadgeText}>Next Job in</Text>
           </View>
           <Text style={styles.heroMinutes}>
-            {minsUntil != null && minsUntil > 0 ? `${minsUntil} min` : 'Now'}
+            {formatTimeUntil(minsUntil)}
           </Text>
 
           <View style={styles.heroDivider} />
@@ -165,6 +165,31 @@ function RouteRow({
       </View>
     </Pressable>
   );
+}
+// ─────────────────────────────────────────────
+// Helper to format time until scheduled start
+// ─────────────────────────────────────────────
+function formatTimeUntil(mins: number | null) {
+  if (mins == null || mins <= 0) return 'Now';
+
+  if (mins <= 60) {
+    return `${mins} min`;
+  }
+
+  const days = Math.floor(mins / (24 * 60));
+  const hours = Math.floor((mins % (24 * 60)) / 60);
+  const remainingMins = mins % 60;
+
+  if (days > 0) {
+    if (hours > 0) {
+      return `${days}d ${hours}h`;
+    }
+    return `${days}d`;
+  }
+
+  return remainingMins > 0
+    ? `${hours}h ${remainingMins} min`
+    : `${hours}h`;
 }
 
 // ─────────────────────────────────────────────

@@ -9,7 +9,7 @@
  *
  * The Android emulator can use http://10.0.2.2 to reach the host machine.
  */
-export const API_BASE_URL ='http://192.168.1.9:8000/api/v1';
+export const API_BASE_URL ='http://192.168.1.2:8000/api/v1';
 
 export const TOKEN_KEY = 'fieldops_token';
 
